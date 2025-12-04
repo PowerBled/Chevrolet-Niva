@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "last_updated": "2024-01-15",
+  "last_updated": "2025-12-04",
   "description": "Карты адаптации и калибровочные параметры для Chevrolet Niva",
   
   "supported_models": {
@@ -701,4 +701,5 @@
       "backup_before_update": true
     }
   }
+
 }
