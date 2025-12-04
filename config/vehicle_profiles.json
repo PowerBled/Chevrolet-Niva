@@ -1,0 +1,809 @@
+{
+  "vehicle_profiles": {
+    "2123": {
+      "name": "Chevrolet Niva 1.7i (ВАЗ-2123, 2002-2009)",
+      "engine": {
+        "code": "ВАЗ-2123",
+        "type": "Бензиновый, инжекторный",
+        "displacement": 1690,
+        "fuel_system": "Распределенный впрыск (MPI)",
+        "ecu_model": "GM EFI-4, Январь 7.2, Bosch MP7.0",
+        "injectors": {
+          "flow_rate": 180,
+          "resistance": 11.8,
+          "fuel_pressure": 3.8
+        },
+        "ignition": {
+          "type": "DIS (Double Ignition System)",
+          "coil_resistance": {
+            "primary": 0.3,
+            "secondary": 4.5
+          },
+          "spark_plug": "A17DVRM, FR7DCX, зазор 1.0-1.1 мм"
+        },
+        "timing": {
+          "valve_clearance_intake": 0.2,
+          "valve_clearance_exhaust": 0.35,
+          "ignition_timing_base": 0
+        }
+      },
+      "transmission": {
+        "type": "Механическая, 5-ступенчатая",
+        "model": "ВАЗ-2123",
+        "gear_ratios": {
+          "1": 3.636,
+          "2": 2.188,
+          "3": 1.444,
+          "4": 1.029,
+          "5": 0.820,
+          "reverse": 3.500
+        },
+        "final_drive": 4.1,
+        "recommended_oil": "75W-90 GL-4, 3.3 л"
+      },
+      "electrical": {
+        "battery": {
+          "capacity": 55,
+          "voltage": 12,
+          "type": "Свинцово-кислотная"
+        },
+        "alternator": {
+          "power": 850,
+          "nominal_voltage": 14.2,
+          "max_current": 60
+        },
+        "starter": {
+          "power": 1500,
+          "consumption_current": 110
+        }
+      },
+      "diagnostic_parameters": {
+        "engine_idle_rpm": {
+          "cold": 1200,
+          "warm": 850,
+          "tolerance": 50
+        },
+        "coolant_temperature": {
+          "operating": 85,
+          "fan_on": 98,
+          "fan_off": 92,
+          "overheat_warning": 105
+        },
+        "fuel_trim": {
+          "short_term_min": -10,
+          "short_term_max": 10,
+          "long_term_min": -8,
+          "long_term_max": 8
+        },
+        "oxygen_sensors": {
+          "voltage_min": 0.1,
+          "voltage_max": 0.9,
+          "response_time_max": 200,
+          "heater_resistance": 5.0
+        },
+        "throttle_position": {
+          "closed": 0,
+          "fully_open": 100,
+          "idle_switch_activation": 2
+        },
+        "maf_sensor": {
+          "idle_flow": 8.0,
+          "max_flow": 300,
+          "voltage_idle": 1.0,
+          "voltage_max": 5.0
+        },
+        "fuel_pressure": {
+          "nominal": 3.8,
+          "min": 3.0,
+          "max": 4.2,
+          "regulator_plus": 0.3
+        },
+        "compression": {
+          "min": 10.0,
+          "max": 14.0,
+          "difference_max": 1.0
+        }
+      },
+      "adaptation_procedures": {
+        "throttle_body_learning": {
+          "enabled": true,
+          "procedure": "При включенном зажигании и выключенном двигателе нажать педаль газа до упора и держать 5 секунд, отпустить и подождать 5 секунд. Повторить 3 раза.",
+          "conditions": "Напряжение АКБ > 12В, температура двигателя 20-90°C"
+        },
+        "idle_air_volume_learning": {
+          "enabled": true,
+          "procedure": "Прогреть двигатель до рабочей температуры. Заглушить, выключить все потребители. Запустить двигатель и держать на холостом ходу 10 минут.",
+          "conditions": "Температура охлаждающей жидкости > 80°C"
+        },
+        "immobilizer_learning": {
+          "enabled": true,
+          "procedure": "Требуется специальный PIN-код. Процедура программирования ключей через диагностический разъем.",
+          "security_level": "high"
+        },
+        "crankshaft_position_sensor_learning": {
+          "enabled": true,
+          "procedure": "Запустить двигатель и держать обороты 3000-3500 об/мин в течение 1 минуты.",
+          "conditions": "Температура двигателя > 70°C"
+        }
+      },
+      "maintenance_schedule": {
+        "oil_change": 15000,
+        "oil_filter": 15000,
+        "air_filter": 30000,
+        "fuel_filter": 30000,
+        "spark_plugs": 30000,
+        "timing_belt": 60000,
+        "coolant": 60000,
+        "brake_fluid": 60000
+      }
+    },
+    "21236": {
+      "name": "Chevrolet Niva 1.7i (ВАЗ-21236, 2010-2020)",
+      "engine": {
+        "code": "ВАЗ-21236",
+        "type": "Бензиновый, инжекторный с нормой Евро-4",
+        "displacement": 1690,
+        "fuel_system": "Распределенный впрыск с катколлектором",
+        "ecu_model": "БОШ МР7.0, ИТЭЛМА 7.1",
+        "emission_standard": "Евро-4",
+        "injectors": {
+          "flow_rate": 185,
+          "resistance": 12.0,
+          "fuel_pressure": 4.0
+        },
+        "ignition": {
+          "type": "Индивидуальные катушки",
+          "coil_resistance": {
+            "primary": 0.5,
+            "secondary": 8.0
+          },
+          "spark_plug": "FR7DCX+, BPR6ES, зазор 1.0 мм"
+        },
+        "timing": {
+          "valve_clearance_intake": 0.2,
+          "valve_clearance_exhaust": 0.35,
+          "ignition_timing_base": 5
+        }
+      },
+      "transmission": {
+        "type": "Механическая, 5-ступенчатая",
+        "model": "ВАЗ-21236",
+        "gear_ratios": {
+          "1": 3.636,
+          "2": 2.188,
+          "3": 1.444,
+          "4": 1.029,
+          "5": 0.820,
+          "reverse": 3.500
+        },
+        "final_drive": 4.1,
+        "recommended_oil": "75W-90 GL-4/5, 3.3 л"
+      },
+      "brakes": {
+        "front": {
+          "type": "Дисковые, вентилируемые",
+          "diameter": 276,
+          "thickness_min": 19
+        },
+        "rear": {
+          "type": "Барабанные",
+          "diameter": 250,
+          "thickness_min": 5
+        },
+        "abs": {
+          "present": true,
+          "model": "БОШ 8.1",
+          "sensor_resistance": 1000
+        }
+      },
+      "electrical": {
+        "battery": {
+          "capacity": 60,
+          "voltage": 12,
+          "type": "Свинцово-кислотная, необслуживаемая"
+        },
+        "alternator": {
+          "power": 900,
+          "nominal_voltage": 14.4,
+          "max_current": 70
+        },
+        "starter": {
+          "power": 1600,
+          "consumption_current": 120
+        }
+      },
+      "diagnostic_parameters": {
+        "engine_idle_rpm": {
+          "cold": 1100,
+          "warm": 800,
+          "ac_on": 900,
+          "tolerance": 40
+        },
+        "coolant_temperature": {
+          "operating": 90,
+          "fan_on": 102,
+          "fan_off": 96,
+          "overheat_warning": 107
+        },
+        "fuel_trim": {
+          "short_term_min": -8,
+          "short_term_max": 8,
+          "long_term_min": -6,
+          "long_term_max": 6
+        },
+        "oxygen_sensors": {
+          "upstream": {
+            "type": "Циркониевый, подогреваемый",
+            "voltage_min": 0.1,
+            "voltage_max": 0.9,
+            "response_time_max": 180
+          },
+          "downstream": {
+            "type": "Циркониевый, подогреваемый",
+            "voltage_target": 0.45
+          }
+        },
+        "throttle_position": {
+          "closed": 0,
+          "fully_open": 100,
+          "idle_switch_activation": 1.5,
+          "self_cleaning_interval": 50000
+        },
+        "maf_sensor": {
+          "idle_flow": 7.5,
+          "max_flow": 320,
+          "voltage_idle": 1.1,
+          "voltage_max": 5.0
+        },
+        "fuel_pressure": {
+          "nominal": 4.0,
+          "min": 3.5,
+          "max": 4.5,
+          "regulator_plus": 0.3
+        },
+        "compression": {
+          "min": 11.0,
+          "max": 14.5,
+          "difference_max": 0.8
+        },
+        "vvt_system": {
+          "present": true,
+          "advance_max": 35,
+          "retard_max": 25
+        }
+      },
+      "adaptation_procedures": {
+        "throttle_body_learning": {
+          "enabled": true,
+          "procedure": "Включить зажигание на 30 секунд (не запуская двигатель), выключить зажигание на 10 секунд. Повторить 3 раза.",
+          "conditions": "Напряжение АКБ > 12.5В"
+        },
+        "idle_air_volume_learning": {
+          "enabled": true,
+          "procedure": "Прогреть двигатель до 85-95°C. Заглушить. Подождать 10 секунд. Запустить двигатель и держать 2000 об/мин 30 секунд, затем холостой ход 2 минуты.",
+          "conditions": "Коробка в нейтрали, все потребители выключены"
+        },
+        "immobilizer_learning": {
+          "enabled": true,
+          "procedure": "Требуется PIN-код иммобилайзера. Использовать диагностическую утилиту с поддержкой ИммоБОШ.",
+          "security_level": "high",
+          "max_keys": 5
+        },
+        "crankshaft_position_sensor_learning": {
+          "enabled": true,
+          "procedure": "Запустить двигатель, прогреть до рабочей температуры. Выключить все потребители. Запустить и держать обороты 2500-3000 об/мин до стабилизации (обычно 1-2 минуты).",
+          "conditions": "Температура двигателя > 80°C"
+        },
+        "knock_sensor_learning": {
+          "enabled": true,
+          "procedure": "Прогреть двигатель до рабочей температуры. Двигаться на 4-й передаче при 2000-2500 об/мин с резким нажатием педали газа до 4000 об/мин. Повторить 5 раз.",
+          "conditions": "Дорожные условия, безопасность"
+        }
+      },
+      "maintenance_schedule": {
+        "oil_change": 15000,
+        "oil_filter": 15000,
+        "air_filter": 30000,
+        "fuel_filter": 30000,
+        "spark_plugs": 30000,
+        "timing_belt": 75000,
+        "coolant": 75000,
+        "brake_fluid": 60000,
+        "transmission_oil": 90000,
+        "transfer_case_oil": 90000,
+        "rear_axle_oil": 90000
+      }
+    },
+    "2123-250": {
+      "name": "Chevrolet Niva 1.8i (ВАЗ-2123-250, 2014-2020)",
+      "engine": {
+        "code": "ВАЗ-21179",
+        "type": "Бензиновый, 16-клапанный, инжекторный",
+        "displacement": 1774,
+        "compression_ratio": 10.5,
+        "power": 122,
+        "torque": 170,
+        "fuel_system": "Распределенный впрыск с фазированным впрыском",
+        "ecu_model": "БОШ МЕ17.9.7, ИТЭЛМА 10.1",
+        "emission_standard": "Евро-5",
+        "injectors": {
+          "flow_rate": 210,
+          "resistance": 12.5,
+          "fuel_pressure": 3.8
+        },
+        "ignition": {
+          "type": "Индивидуальные катушки",
+          "coil_resistance": {
+            "primary": 0.6,
+            "secondary": 9.0
+          },
+          "spark_plug": "FR7SI30, зазор 0.9 мм"
+        },
+        "timing": {
+          "valve_clearance": "Гидрокомпенсаторы",
+          "ignition_timing_base": 10
+        }
+      },
+      "transmission": {
+        "type": "Механическая, 5-ступенчатая",
+        "model": "ВАЗ-2181",
+        "gear_ratios": {
+          "1": 3.636,
+          "2": 2.188,
+          "3": 1.444,
+          "4": 1.029,
+          "5": 0.820,
+          "reverse": 3.500
+        },
+        "final_drive": 3.9,
+        "recommended_oil": "75W-90 GL-4/5, 3.3 л"
+      },
+      "suspension": {
+        "front": {
+          "type": "Независимая, пружинная",
+          "shock_absorber": "Газомасляный",
+          "stabilizer_bar": true
+        },
+        "rear": {
+          "type": "Зависимая, пружинная",
+          "shock_absorber": "Газомасляный"
+        }
+      },
+      "brakes": {
+        "front": {
+          "type": "Дисковые, вентилируемые",
+          "diameter": 280,
+          "thickness_min": 20
+        },
+        "rear": {
+          "type": "Дисковые",
+          "diameter": 260,
+          "thickness_min": 8
+        },
+        "abs": {
+          "present": true,
+          "model": "БОШ 9.0",
+          "esp": false,
+          "sensor_resistance": 1200
+        }
+      },
+      "electrical": {
+        "battery": {
+          "capacity": 65,
+          "voltage": 12,
+          "type": "AGM"
+        },
+        "alternator": {
+          "power": 1150,
+          "nominal_voltage": 14.5,
+          "max_current": 80
+        },
+        "starter": {
+          "power": 1800,
+          "consumption_current": 130
+        },
+        "can_bus": {
+          "present": true,
+          "speed": "500 kbps"
+        }
+      },
+      "diagnostic_parameters": {
+        "engine_idle_rpm": {
+          "cold": 1000,
+          "warm": 750,
+          "ac_on": 850,
+          "tolerance": 30
+        },
+        "coolant_temperature": {
+          "operating": 92,
+          "fan_on": 100,
+          "fan_off": 94,
+          "overheat_warning": 108
+        },
+        "fuel_trim": {
+          "short_term_min": -6,
+          "short_term_max": 6,
+          "long_term_min": -5,
+          "long_term_max": 5
+        },
+        "oxygen_sensors": {
+          "upstream": {
+            "type": "Широкополосный LSU 4.9",
+            "lambda_range": 0.7,
+            "lambda_range": 4.0
+          },
+          "downstream": {
+            "type": "Циркониевый",
+            "voltage_target": 0.45
+          }
+        },
+        "throttle_position": {
+          "closed": 0,
+          "fully_open": 100,
+          "electronic": true,
+          "self_cleaning_interval": 100000
+        },
+        "maf_sensor": {
+          "idle_flow": 8.5,
+          "max_flow": 350,
+          "voltage_idle": 1.2,
+          "voltage_max": 5.0
+        },
+        "fuel_pressure": {
+          "nominal": 3.8,
+          "min": 3.3,
+          "max": 4.3,
+          "high_pressure_pump": true
+        },
+        "compression": {
+          "min": 12.0,
+          "max": 15.0,
+          "difference_max": 0.7
+        },
+        "vvt_system": {
+          "present": true,
+          "intake_cam_advance": 40,
+          "exhaust_cam_retard": 30,
+          "oil_pressure_min": 1.5
+        },
+        "boost_pressure": {
+          "present": false
+        }
+      },
+      "adaptation_procedures": {
+        "throttle_body_learning": {
+          "enabled": true,
+          "procedure": "Сброс адаптаций через диагностику. Калибровка крайних положений при включенном зажигании.",
+          "conditions": "Напряжение АКБ > 12.8В"
+        },
+        "idle_air_volume_learning": {
+          "enabled": true,
+          "procedure": "После сброса адаптаций: прогреть двигатель, выключить все потребители, запустить и держать 10 минут на холостом ходу.",
+          "conditions": "Температура охлаждающей жидкости 85-95°C"
+        },
+        "immobilizer_learning": {
+          "enabled": true,
+          "procedure": "CAN-иммобилайзер. Программирование через центральный замок с использованием мастер-ключа.",
+          "security_level": "high",
+          "max_keys": 8
+        },
+        "crankshaft_position_sensor_learning": {
+          "enabled": true,
+          "procedure": "Автоматически при первом запуске после снятия клеммы АКБ. Держать обороты 2000-2500 об/мин 30 секунд.",
+          "conditions": "Температура двигателя > 70°C"
+        },
+        "valvetronic_learning": {
+          "enabled": false,
+          "note": "Система изменения фаз газораспределения без гидрокомпенсаторов"
+        },
+        "lambda_sensor_learning": {
+          "enabled": true,
+          "procedure": "После замены датчика: прогреть двигатель, движение в режиме 2000-3000 об/мин 10 минут.",
+          "conditions": "Температура выхлопной системы > 300°C"
+        }
+      },
+      "maintenance_schedule": {
+        "oil_change": 15000,
+        "oil_filter": 15000,
+        "air_filter": 30000,
+        "fuel_filter": 60000,
+        "spark_plugs": 60000,
+        "timing_chain": "Проверка каждые 100000",
+        "coolant": 75000,
+        "brake_fluid": 60000,
+        "transmission_oil": 90000,
+        "transfer_case_oil": 90000,
+        "rear_axle_oil": 90000,
+        "serpentine_belt": 60000
+      }
+    },
+    "2123M": {
+      "name": "Chevrolet Niva Модерн (2021-н.в.)",
+      "engine": {
+        "code": "ВАЗ-21231",
+        "type": "Бензиновый, 16-клапанный с системой изменения фаз",
+        "displacement": 1690,
+        "compression_ratio": 10.8,
+        "power": 106,
+        "torque": 148,
+        "fuel_system": "Распределенный впрыск с электронным управлением",
+        "ecu_model": "БОШ ME17.9.7 EV",
+        "emission_standard": "Евро-5+",
+        "injectors": {
+          "flow_rate": 195,
+          "resistance": 13.0,
+          "fuel_pressure": 3.8
+        },
+        "ignition": {
+          "type": "Катушки на свечах",
+          "coil_resistance": {
+            "primary": 0.7,
+            "secondary": 10.0
+          },
+          "spark_plug": "FR7S130, зазор 0.8 мм"
+        },
+        "timing": {
+          "valve_clearance": "Гидрокомпенсаторы",
+          "ignition_timing_base": 12,
+          "vvt": {
+            "intake": true,
+            "exhaust": false
+          }
+        }
+      },
+      "transmission": {
+        "type": "Механическая, 5-ступенчатая",
+        "model": "ВАЗ-2181М",
+        "gear_ratios": {
+          "1": 3.636,
+          "2": 2.188,
+          "3": 1.444,
+          "4": 1.029,
+          "5": 0.820,
+          "reverse": 3.500
+        },
+        "final_drive": 4.1,
+        "recommended_oil": "75W-85 GL-4+, 3.3 л"
+      },
+      "suspension": {
+        "front": {
+          "type": "Независимая, McPherson",
+          "spring_rate": 21.5,
+          "shock_absorber": "Газомасляный с изменяемой характеристикой"
+        },
+        "rear": {
+          "type": "Зависимая, рессорная с амортизаторами",
+          "spring_rate": 18.5
+        }
+      },
+      "brakes": {
+        "front": {
+          "type": "Дисковые, вентилируемые",
+          "diameter": 280,
+          "thickness_min": 20
+        },
+        "rear": {
+          "type": "Дисковые",
+          "diameter": 260,
+          "thickness_min": 8
+        },
+        "abs": {
+          "present": true,
+          "model": "БОШ 9.1 ESP",
+          "esp": true,
+          "hill_start_assist": true,
+          "sensor_resistance": 1300
+        }
+      },
+      "electrical": {
+        "battery": {
+          "capacity": 70,
+          "voltage": 12,
+          "type": "AGM, старт-стоп"
+        },
+        "alternator": {
+          "power": 1200,
+          "nominal_voltage": 14.7,
+          "max_current": 85,
+          "start_stop": true
+        },
+        "starter": {
+          "power": 2000,
+          "consumption_current": 140
+        },
+        "can_bus": {
+          "present": true,
+          "speed": "500 kbps",
+          "networks": ["Powertrain", "Comfort", "Diagnostics"]
+        },
+        "infotainment": {
+          "present": true,
+          "screen": "7 дюймов",
+          "android_auto": true,
+          "apple_carplay": true
+        }
+      },
+      "diagnostic_parameters": {
+        "engine_idle_rpm": {
+          "cold": 950,
+          "warm": 700,
+          "ac_on": 800,
+          "start_stop_active": 0,
+          "tolerance": 25
+        },
+        "coolant_temperature": {
+          "operating": 94,
+          "fan_on": 98,
+          "fan_off": 92,
+          "overheat_warning": 110
+        },
+        "fuel_trim": {
+          "short_term_min": -5,
+          "short_term_max": 5,
+          "long_term_min": -4,
+          "long_term_max": 4
+        },
+        "oxygen_sensors": {
+          "upstream": {
+            "type": "Широкополосный LSU ADV",
+            "lambda_range": 0.65,
+            "lambda_range": 4.5,
+            "heater_pwm": true
+          },
+          "downstream": {
+            "type": "Циркониевый с цифровым выходом"
+          }
+        },
+        "throttle_position": {
+          "closed": 0,
+          "fully_open": 100,
+          "electronic": true,
+          "dual_sensor": true,
+          "self_cleaning_interval": 150000
+        },
+        "maf_sensor": {
+          "idle_flow": 7.0,
+          "max_flow": 380,
+          "digital_signal": true,
+          "intake_temperature_integrated": true
+        },
+        "fuel_pressure": {
+          "nominal": 4.0,
+          "min": 3.6,
+          "max": 4.4,
+          "high_pressure_pump": false,
+          "sensor_present": true
+        },
+        "compression": {
+          "min": 12.5,
+          "max": 15.5,
+          "difference_max": 0.5
+        },
+        "vvt_system": {
+          "present": true,
+          "intake_cam_advance": 45,
+          "oil_pressure_min": 1.8,
+          "solenoid_resistance": 6.5
+        },
+        "egr_system": {
+          "present": true,
+          "type": "Электронный",
+          "position_sensor": true
+        },
+        "evap_system": {
+          "present": true,
+          "leak_detection_pump": true,
+          "purge_valve_duty_cycle_idle": 20
+        }
+      },
+      "adaptation_procedures": {
+        "throttle_body_learning": {
+          "enabled": true,
+          "procedure": "Адаптивная система. При замене дросселя: сброс через диагностику, затем запуск и прогрев двигателя.",
+          "conditions": "Напряжение АКБ > 13.0В",
+          "automatic_relearn": true
+        },
+        "idle_air_volume_learning": {
+          "enabled": true,
+          "procedure": "Автоматически при каждом запуске. Ручной сброс через диагностический сканер.",
+          "conditions": "Температура охлаждающей жидкости 20-100°C"
+        },
+        "immobilizer_learning": {
+          "enabled": true,
+          "procedure": "CAN-иммобилайзер с криптозащитой. Требуется доступ к серверу производителя или дилерский сканер.",
+          "security_level": "very_high",
+          "max_keys": 10,
+          "procedural_key": true
+        },
+        "crankshaft_position_sensor_learning": {
+          "enabled": true,
+          "procedure": "Автоматическая процедура при первом запуске. Система самообучающаяся.",
+          "automatic": true
+        },
+        "camshaft_position_sensor_learning": {
+          "enabled": true,
+          "procedure": "Синхронизация фаз при замене ремня ГРМ или датчиков. Через диагностический интерфейс.",
+          "requires_tools": ["Диагностический сканер"]
+        },
+        "lambda_sensor_learning": {
+          "enabled": true,
+          "procedure": "Автоадаптация. После замены датчика движение в различных режимах 20-30 км.",
+          "auto_adaptation": true
+        },
+        "egr_valve_learning": {
+          "enabled": true,
+          "procedure": "Калибровка крайних положений через диагностику. Прогрев двигателя до рабочей температуры.",
+          "conditions": "Температура выхлопных газов > 200°C"
+        },
+        "turbocharger_wastegate_learning": {
+          "enabled": false,
+          "note": "Без турбонаддува"
+        }
+      },
+      "maintenance_schedule": {
+        "oil_change": 15000,
+        "oil_filter": 15000,
+        "air_filter": 30000,
+        "cabin_filter": 15000,
+        "fuel_filter": 60000,
+        "spark_plugs": 60000,
+        "timing_belt": 90000,
+        "coolant": 100000,
+        "brake_fluid": 60000,
+        "transmission_oil": 120000,
+        "transfer_case_oil": 120000,
+        "rear_axle_oil": 120000,
+        "serpentine_belt": 90000,
+        "ignition_coils": "По состоянию",
+        "oxygen_sensors": 160000
+      },
+      "special_features": {
+        "start_stop_system": true,
+        "electric_power_steering": true,
+        "cruise_control": true,
+        "tpms": true,
+        "rain_sensor": true,
+        "auto_headlights": true,
+        "parking_sensors": true,
+        "rear_camera": true
+      }
+    }
+  },
+  "common_parameters": {
+    "voltage_ranges": {
+      "battery_operating": 12.0,
+      "battery_min_start": 9.6,
+      "alternator_charging": 13.5,
+      "alternator_max": 15.0,
+      "sensor_reference_voltage": 5.0
+    },
+    "temperature_ranges": {
+      "engine_operating_min": 70,
+      "engine_operating_max": 105,
+      "ambient_operating": -40,
+      "ambient_operating": 50,
+      "transmission_max": 120
+    },
+    "pressure_ranges": {
+      "fuel_min": 2.5,
+      "fuel_max": 6.0,
+      "oil_min": 0.5,
+      "oil_max": 6.0,
+      "tire_standard": 2.1,
+      "tire_offroad": 1.6
+    },
+    "diagnostic_intervals": {
+      "quick_scan_timeout": 30,
+      "full_scan_timeout": 180,
+      "data_logging_interval": 100,
+      "error_check_interval": 1000
+    },
+    "communication_settings": {
+      "default_baudrate": 38400,
+      "can_baudrate": 500000,
+      "timeout_command": 2000,
+      "timeout_initial": 5000,
+      "retry_count": 3
+    }
+  }
+}

@@ -1,0 +1,497 @@
+{
+  "application": {
+    "name": "Chevrolet Niva Professional Diagnostic",
+    "version": "1.0.0",
+    "author": "Niva Diagnostic Team",
+    "company": "AutoTech Solutions",
+    "website": "https://diagnostic.niva-support.ru",
+    "update_url": "https://updates.diagnostic.niva-support.ru/v1",
+    "license": "Professional Edition",
+    "build_date": "2024-01-15"
+  },
+  
+  "interface": {
+    "language": "ru",
+    "theme": "dark",
+    "font_family": "Segoe UI",
+    "font_size": 9,
+    "icon_size": 32,
+    "animation_enabled": true,
+    "animation_speed": 200,
+    "tooltips_enabled": true,
+    "confirm_exit": true,
+    "confirm_clear_errors": true,
+    "confirm_adaptation": true,
+    "auto_save_reports": true,
+    "report_save_path": "./reports",
+    "screenshot_save_path": "./screenshots",
+    "log_save_path": "./logs",
+    "backup_path": "./backups"
+  },
+  
+  "connection": {
+    "default_connection_type": "bluetooth",
+    "auto_connect": false,
+    "auto_reconnect": true,
+    "reconnect_attempts": 3,
+    "reconnect_delay": 2000,
+    "connection_timeout": 10000,
+    "response_timeout": 3000,
+    "baudrate": 38400,
+    "data_bits": 8,
+    "parity": "none",
+    "stop_bits": 1,
+    "flow_control": "none",
+    "bluetooth_discovery_timeout": 10000,
+    "wifi_timeout": 5000,
+    "keep_alive_interval": 30000,
+    
+    "bluetooth_devices": [
+      {
+        "name": "ELM327",
+        "address": "00:1A:7D:DA:71:13",
+        "channel": 1,
+        "auto_pair": true
+      },
+      {
+        "name": "OBDII",
+        "address": "00:0D:18:12:34:56",
+        "channel": 1,
+        "auto_pair": true
+      }
+    ],
+    
+    "serial_ports": [
+      {
+        "port": "COM3",
+        "description": "ELM327 USB",
+        "baudrate": 38400
+      },
+      {
+        "port": "COM4",
+        "description": "FTDI Adapter",
+        "baudrate": 38400
+      }
+    ],
+    
+    "wifi_connections": [
+      {
+        "ip": "192.168.0.10",
+        "port": 35000,
+        "description": "ELM327 WiFi"
+      }
+    ]
+  },
+  
+  "vehicle": {
+    "default_model": "21236",
+    "default_vin": "",
+    "default_year": 2020,
+    "default_engine": "1.7i",
+    "default_transmission": "manual",
+    "default_fuel_type": "petrol",
+    "save_vehicle_profiles": true,
+    "auto_detect_model": true,
+    "vin_validation": true,
+    "store_service_history": true,
+    "service_interval_km": 15000,
+    "service_interval_months": 12
+  },
+  
+  "diagnostics": {
+    "full_scan_on_connect": false,
+    "auto_read_errors": true,
+    "auto_read_live_data": false,
+    "live_data_refresh_rate": 1000,
+    "freeze_frame_enabled": true,
+    "pending_dtc_enabled": true,
+    "permanent_dtc_enabled": true,
+    "monitor_tests_enabled": true,
+    "o2_sensor_tests_enabled": true,
+    "onboard_tests_enabled": true,
+    
+    "ecu_priority": [
+      "ENGINE",
+      "ABS",
+      "AIRBAG",
+      "IMMO",
+      "INSTRUMENT",
+      "AC",
+      "TRANSMISSION"
+    ],
+    
+    "pid_groups": {
+      "basic": ["ENGINE_RPM", "VEHICLE_SPEED", "COOLANT_TEMP", "THROTTLE_POSITION"],
+      "advanced": ["MAF_SENSOR", "O2_SENSOR_B1S1", "FUEL_PRESSURE", "TIMING_ADVANCE"],
+      "complete": ["ENGINE_RPM", "VEHICLE_SPEED", "COOLANT_TEMP", "INTAKE_TEMP", "THROTTLE_POSITION", "MAF_SENSOR", "O2_SENSOR_B1S1", "O2_SENSOR_B1S2", "FUEL_PRESSURE", "INTAKE_PRESSURE", "TIMING_ADVANCE", "ENGINE_LOAD", "FUEL_LEVEL", "BAROMETRIC_PRESSURE", "CONTROL_MODULE_VOLTAGE"]
+    },
+    
+    "sensor_thresholds": {
+      "coolant_temp_min": -40,
+      "coolant_temp_max": 215,
+      "coolant_temp_normal_min": 80,
+      "coolant_temp_normal_max": 105,
+      "intake_temp_min": -40,
+      "intake_temp_max": 215,
+      "battery_voltage_min": 11.5,
+      "battery_voltage_max": 15.5,
+      "battery_voltage_normal": 13.5,
+      "fuel_pressure_min": 200,
+      "fuel_pressure_max": 700,
+      "rpm_idle_min": 700,
+      "rpm_idle_max": 900,
+      "throttle_closed_min": 0,
+      "throttle_closed_max": 5,
+      "throttle_wot_min": 85,
+      "throttle_wot_max": 100
+    },
+    
+    "test_sequences": {
+      "quick_test": ["ECU_COMM", "READ_DTC", "BASIC_PIDS"],
+      "full_test": ["ECU_COMM", "READ_DTC", "LIVE_DATA", "SENSOR_TEST", "ACTUATOR_TEST", "MONITOR_TESTS"],
+      "emission_test": ["O2_SENSORS", "CATALYST", "EVAP_SYSTEM", "MISFIRE"],
+      "safety_test": ["ABS", "AIRBAG", "SEATBELTS", "LIGHTS"]
+    }
+  },
+  
+  "adaptation": {
+    "enable_advanced_adaptation": true,
+    "backup_before_adaptation": true,
+    "confirm_dangerous_operations": true,
+    "max_adaptation_attempts": 3,
+    "adaptation_timeout": 300000,
+    
+    "procedures": {
+      "idle_adaptation": {
+        "enabled": true,
+        "requirements": ["engine_warm", "electrics_off", "parking_brake"],
+        "steps": ["clear_memory", "start_engine", "idle_3min", "rev_2500_3min", "idle_3min"],
+        "timeout": 600000
+      },
+      "throttle_adaptation": {
+        "enabled": true,
+        "requirements": ["ignition_on", "engine_off"],
+        "steps": ["learn_closed", "learn_wot", "verify"],
+        "timeout": 120000
+      },
+      "immobilizer_learning": {
+        "enabled": true,
+        "requirements": ["all_keys", "security_code"],
+        "steps": ["enter_code", "program_keys", "verify_keys"],
+        "timeout": 300000
+      },
+      "window_adaptation": {
+        "enabled": true,
+        "requirements": ["battery_charged"],
+        "steps": ["fully_open", "fully_close", "set_limits"],
+        "timeout": 60000
+      },
+      "steering_angle_sensor": {
+        "enabled": true,
+        "requirements": ["wheels_straight", "ignition_on"],
+        "steps": ["read_current", "set_zero", "verify"],
+        "timeout": 30000
+      },
+      "fuel_trim_reset": {
+        "enabled": true,
+        "requirements": ["engine_warm"],
+        "steps": ["reset_ltft", "reset_stft", "monitor"],
+        "timeout": 180000
+      }
+    },
+    
+    "limits": {
+      "max_idle_rpm_adjustment": 100,
+      "max_fuel_trim_adjustment": 25,
+      "max_ignition_timing_adjustment": 5,
+      "max_injection_time_adjustment": 20,
+      "allow_permanent_changes": false
+    }
+  },
+  
+  "reports": {
+    "default_format": "html",
+    "available_formats": ["html", "pdf", "docx", "xlsx", "json"],
+    "include_screenshots": true,
+    "include_logs": true,
+    "include_charts": true,
+    "include_recommendations": true,
+    "auto_generate_report": false,
+    "compress_reports": true,
+    "report_template": "professional",
+    
+    "sections": {
+      "header": true,
+      "vehicle_info": true,
+      "test_summary": true,
+      "error_codes": true,
+      "live_data": true,
+      "graphs": true,
+      "adaptation_results": true,
+      "recommendations": true,
+      "technician_notes": true,
+      "footer": true
+    },
+    
+    "graph_settings": {
+      "width": 800,
+      "height": 400,
+      "dpi": 100,
+      "style": "seaborn",
+      "colors": ["#2E86AB", "#A23B72", "#F18F01", "#C73E1D", "#6A994E"],
+      "time_range": 300
+    }
+  },
+  
+  "logging": {
+    "enabled": true,
+    "level": "INFO",
+    "console_output": true,
+    "file_output": true,
+    "max_file_size_mb": 10,
+    "max_backup_count": 5,
+    "log_format": "%(asctime)s - %(name)s - %(levelname)s - %(message)s",
+    "date_format": "%Y-%m-%d %H:%M:%S",
+    "separate_logs": true,
+    
+    "log_categories": {
+      "connection": true,
+      "diagnostics": true,
+      "errors": true,
+      "commands": true,
+      "responses": false,
+      "ui_events": false,
+      "performance": true
+    }
+  },
+  
+  "security": {
+    "encrypt_sensitive_data": true,
+    "encryption_key": "auto_generated_on_first_run",
+    "require_password_for_adaptation": false,
+    "require_password_for_clear_errors": false,
+    "session_timeout_minutes": 30,
+    "max_login_attempts": 3,
+    "lockout_time_minutes": 15,
+    "audit_log_enabled": true,
+    
+    "permissions": {
+      "basic_user": ["connect", "read_errors", "read_live_data", "generate_reports"],
+      "technician": ["connect", "read_errors", "clear_errors", "read_live_data", "basic_adaptation", "generate_reports"],
+      "expert": ["connect", "read_errors", "clear_errors", "read_live_data", "full_adaptation", "advanced_settings", "generate_reports", "export_data"]
+    }
+  },
+  
+  "updates": {
+    "check_for_updates": true,
+    "check_interval_days": 7,
+    "auto_download_updates": false,
+    "beta_updates": false,
+    "update_channels": ["stable", "beta", "development"]
+  },
+  
+  "performance": {
+    "data_cache_enabled": true,
+    "cache_size_mb": 100,
+    "preload_vehicle_data": true,
+    "multithreading_enabled": true,
+    "max_threads": 4,
+    "graphics_acceleration": true,
+    "memory_optimization": true,
+    "auto_cleanup_old_data": true,
+    "cleanup_days": 30
+  },
+  
+  "advanced": {
+    "raw_command_mode": false,
+    "debug_mode": false,
+    "developer_mode": false,
+    "bypass_safety_checks": false,
+    "custom_protocols": [],
+    "scripting_enabled": false,
+    "api_enabled": false,
+    "api_port": 8080,
+    
+    "elm327_settings": {
+      "auto_detect_protocol": true,
+      "default_protocol": "AUTO",
+      "headers_enabled": true,
+      "echo_enabled": false,
+      "linefeeds_enabled": false,
+      "spaces_enabled": false,
+      "memory_enabled": false,
+      "adaptive_timing": true,
+      "adaptive_timing_aggressiveness": 1
+    },
+    
+    "communication": {
+      "command_delay_ms": 100,
+      "response_wait_ms": 200,
+      "retry_count": 2,
+      "crc_check": true,
+      "validate_response": true,
+      "timeout_action": "retry",
+      "error_recovery": true
+    }
+  },
+  
+  "customization": {
+    "company_name": "",
+    "company_logo": "",
+    "report_header": "",
+    "report_footer": "",
+    "color_scheme": "default",
+    "custom_css": "",
+    "keyboard_shortcuts": {
+      "connect": "Ctrl+C",
+      "disconnect": "Ctrl+D",
+      "start_diagnostic": "F5",
+      "stop_diagnostic": "F6",
+      "clear_errors": "F7",
+      "save_report": "Ctrl+S",
+      "fullscreen": "F11"
+    }
+  },
+  
+  "integration": {
+    "external_databases": {
+      "error_codes": "https://api.niva-diagnostic.com/error-codes",
+      "technical_data": "https://api.niva-diagnostic.com/technical-data",
+      "repair_manual": "https://api.niva-diagnostic.com/repair-manual"
+    },
+    
+    "third_party_tools": {
+      "dyno_software": false,
+      "oscilloscope": false,
+      "smoke_machine": false,
+      "compression_tester": false
+    },
+    
+    "cloud_sync": {
+      "enabled": false,
+      "sync_reports": false,
+      "sync_profiles": false,
+      "sync_logs": false,
+      "cloud_url": "https://cloud.niva-diagnostic.com"
+    }
+  },
+  
+  "vehicle_specific": {
+    "2123": {
+      "engine_capacity": 1.7,
+      "fuel_system": "injection",
+      "injectors": "Bosch",
+      "ignition_system": "coil_on_plug",
+      "abs_type": "Bosch 5.3",
+      "airbag_type": "single_stage",
+      "special_notes": "Early model with different OBD protocol"
+    },
+    
+    "21236": {
+      "engine_capacity": 1.7,
+      "fuel_system": "injection",
+      "injectors": "Bosch",
+      "ignition_system": "coil_on_plug",
+      "abs_type": "Bosch 8.1",
+      "airbag_type": "dual_stage",
+      "special_notes": "Updated model with CAN support"
+    },
+    
+    "2123-250": {
+      "engine_capacity": 1.8,
+      "fuel_system": "injection",
+      "injectors": "Siemens",
+      "ignition_system": "wasted_spark",
+      "abs_type": "Bosch 9.0",
+      "airbag_type": "dual_stage",
+      "special_notes": "1.8L engine with different calibration"
+    },
+    
+    "2123M": {
+      "engine_capacity": 1.7,
+      "fuel_system": "injection",
+      "injectors": "Bosch",
+      "ignition_system": "coil_on_plug",
+      "abs_type": "Bosch 9.3",
+      "airbag_type": "multi_stage",
+      "special_notes": "Modernized version with improved electronics"
+    }
+  },
+  
+  "service_schedules": {
+    "maintenance_tasks": {
+      "oil_change": {
+        "interval_km": 15000,
+        "interval_months": 12,
+        "reset_adaptation": true
+      },
+      "spark_plugs": {
+        "interval_km": 30000,
+        "interval_months": 24,
+        "reset_adaptation": true
+      },
+      "air_filter": {
+        "interval_km": 30000,
+        "interval_months": 24,
+        "reset_adaptation": false
+      },
+      "fuel_filter": {
+        "interval_km": 60000,
+        "interval_months": 48,
+        "reset_adaptation": true
+      },
+      "timing_belt": {
+        "interval_km": 90000,
+        "interval_months": 72,
+        "critical": true
+      }
+    },
+    
+    "reset_procedures": {
+      "oil_service_reset": "SRI_Reset",
+      "inspection_reset": "SRI_Reset",
+      "brake_pad_reset": "Brake_Pad_Reset",
+      "battery_replacement": "Battery_Adaptation"
+    }
+  },
+  
+  "diagnostic_trouble_codes": {
+    "auto_lookup": true,
+    "online_database": true,
+    "local_database": true,
+    "suggest_fixes": true,
+    "estimated_repair_time": true,
+    "estimated_cost": true,
+    "common_codes": ["P0300", "P0420", "P0440", "P0500", "P0562", "P0606", "P2122", "C0121", "B1000"]
+  },
+  
+  "alerts": {
+    "critical_errors": ["P0016", "P0017", "P0299", "P0300", "P0340", "P2122", "C0121"],
+    "warning_thresholds": {
+      "coolant_temp_high": 105,
+      "oil_temp_high": 130,
+      "battery_voltage_low": 12.0,
+      "battery_voltage_high": 15.0,
+      "fuel_pressure_low": 250,
+      "fuel_pressure_high": 650
+    },
+    "notification_sound": true,
+    "popup_notifications": true,
+    "log_notifications": true,
+    "email_notifications": false,
+    "sms_notifications": false
+  },
+  
+  "backup": {
+    "auto_backup": true,
+    "backup_interval_hours": 24,
+    "max_backups": 10,
+    "backup_location": "./backups",
+    "include_settings": true,
+    "include_profiles": true,
+    "include_reports": false,
+    "include_logs": false,
+    "compress_backups": true,
+    "encrypt_backups": false
+  }
+}

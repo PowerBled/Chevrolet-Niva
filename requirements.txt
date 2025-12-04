@@ -1,0 +1,11 @@
+PyQt5==5.15.9
+pyserial==3.5
+obd==0.7.1
+matplotlib==3.7.1
+numpy==1.24.3
+pandas==2.0.1
+pyqtgraph==0.13.3
+qdarkstyle==3.1
+Jinja2==3.1.2
+python-docx==0.8.11
+openpyxl==3.1.2

@@ -1,0 +1,704 @@
+{
+  "version": "1.0.0",
+  "last_updated": "2024-01-15",
+  "description": "Карты адаптации и калибровочные параметры для Chevrolet Niva",
+  
+  "supported_models": {
+    "2123": {
+      "name": "Chevrolet Niva 1.7i (2002-2009)",
+      "engine_codes": ["2111", "2123"],
+      "ecu_vendors": ["Bosch M1.5.4", "Bosch M7.9.7"],
+      "fuel_system": "MPI",
+      "emission_standards": ["EURO-2", "EURO-3"]
+    },
+    "21236": {
+      "name": "Chevrolet Niva 1.7i (2010-2020)",
+      "engine_codes": ["21214"],
+      "ecu_vendors": ["Bosch M7.9.7", "Itelma"],
+      "fuel_system": "MPI",
+      "emission_standards": ["EURO-4", "EURO-5"]
+    },
+    "2123-250": {
+      "name": "Chevrolet Niva 1.8i (2014-2020)",
+      "engine_codes": ["21800"],
+      "ecu_vendors": ["Bosch ME7.9.7", "Itelma"],
+      "fuel_system": "MPI",
+      "emission_standards": ["EURO-4", "EURO-5"]
+    },
+    "2123M": {
+      "name": "Chevrolet Niva Модерн (2021-н.в.)",
+      "engine_codes": ["21801"],
+      "ecu_vendors": ["Bosch ME17.9.7", "Continental"],
+      "fuel_system": "MPI",
+      "emission_standards": ["EURO-5", "EURO-6"]
+    }
+  },
+
+  "throttle_body_adaptation": {
+    "procedures": {
+      "mechanical_stop_learn": {
+        "name": "Обучение механических упоров",
+        "description": "Процедура обучения крайних положений дроссельной заслонки",
+        "prerequisites": [
+          "Зажигание включено, двигатель выключен",
+          "Аккумуляторная батарея заряжена (мин. 12.4V)",
+          "Температура двигателя 15-90°C",
+          "Педаль акселератора не нажата"
+        ],
+        "steps": [
+          {
+            "step": 1,
+            "action": "Включить зажигание на 30 секунд",
+            "command": "AT IAR",
+            "expected_response": "OK",
+            "timeout": 30
+          },
+          {
+            "step": 2,
+            "action": "Выключить зажигание на 10 секунд",
+            "command": "WAIT 10",
+            "expected_response": "WAIT",
+            "timeout": 10
+          },
+          {
+            "step": 3,
+            "action": "Повторить шаги 1-2 еще 2 раза",
+            "command": "LOOP 3",
+            "expected_response": "COMPLETE",
+            "timeout": 120
+          }
+        ],
+        "verification": {
+          "parameter": "THROTTLE_POSITION",
+          "min_value": 0.0,
+          "max_value": 100.0,
+          "idle_position": "10-15%"
+        }
+      },
+      
+      "idle_air_learn": {
+        "name": "Обучение регулятора холостого хода",
+        "description": "Адаптация РХХ для установки правильных оборотов холостого хода",
+        "prerequisites": [
+          "Двигатель прогрет до рабочей температуры",
+          "Все потребители выключены",
+          "Коробка передач в нейтрали",
+          "Рулевое колесо в прямом положении"
+        ],
+        "steps": [
+          {
+            "step": 1,
+            "action": "Запустить двигатель и дать поработать 2 минуты",
+            "command": "ENGINE ON",
+            "expected_response": "RPM 800-900",
+            "timeout": 120
+          },
+          {
+            "step": 2,
+            "action": "Выключить кондиционер и все электроприборы",
+            "command": "AT CLR",
+            "expected_response": "OK",
+            "timeout": 10
+          },
+          {
+            "step": 3,
+            "action": "Подождать стабилизации оборотов",
+            "command": "WAIT 30",
+            "expected_response": "RPM STABLE",
+            "timeout": 30
+          }
+        ],
+        "target_values": {
+          "rpm_min": 750,
+          "rpm_max": 850,
+          "throttle_position": "12-18%",
+          "iat_compensation": "AUTO"
+        }
+      }
+    },
+    
+    "calibration_maps": {
+      "2123_bosch_m1.5.4": {
+        "voltage_map": {
+          "0%": 0.35,
+          "10%": 0.85,
+          "20%": 1.35,
+          "30%": 1.85,
+          "40%": 2.35,
+          "50%": 2.85,
+          "60%": 3.35,
+          "70%": 3.85,
+          "80%": 4.35,
+          "90%": 4.85,
+          "100%": 5.00
+        },
+        "correction_factors": {
+          "temperature": {
+            "-40°C": 1.15,
+            "-20°C": 1.10,
+            "0°C": 1.05,
+            "20°C": 1.00,
+            "40°C": 0.95,
+            "60°C": 0.90,
+            "80°C": 0.85
+          },
+          "voltage": {
+            "11V": 1.10,
+            "12V": 1.05,
+            "13V": 1.00,
+            "14V": 0.95,
+            "15V": 0.90
+          }
+        }
+      }
+    }
+  },
+
+  "fuel_system_adaptation": {
+    "long_term_trim": {
+      "reset_procedure": {
+        "name": "Сброс долгосрочной коррекции топлива",
+        "command": "AT FTR",
+        "description": "Обнуление долгосрочных адаптаций топливоподачи",
+        "limits": {
+          "ltft_min": -25.0,
+          "ltft_max": 25.0,
+          "stft_min": -12.5,
+          "stft_max": 12.5
+        }
+      }
+    },
+    
+    "injector_calibration": {
+      "flow_rates": {
+        "2123": {
+          "injector_type": "Bosch 0280155705",
+          "nominal_flow": 183.0,
+          "flow_units": "cc/min @ 3bar",
+          "dead_time": {
+            "8V": 1.50,
+            "9V": 1.20,
+            "10V": 1.00,
+            "11V": 0.85,
+            "12V": 0.72,
+            "13V": 0.62,
+            "14V": 0.54,
+            "15V": 0.48,
+            "16V": 0.43
+          }
+        },
+        "21236": {
+          "injector_type": "Bosch 0280158124",
+          "nominal_flow": 210.0,
+          "flow_units": "cc/min @ 3bar",
+          "dead_time": {
+            "8V": 1.40,
+            "9V": 1.10,
+            "10V": 0.90,
+            "11V": 0.75,
+            "12V": 0.65,
+            "13V": 0.56,
+            "14V": 0.49,
+            "15V": 0.43,
+            "16V": 0.38
+          }
+        }
+      }
+    },
+    
+    "fuel_pressure_regulation": {
+      "nominal_pressure": {
+        "idle": 2.8,
+        "units": "bar",
+        "wot": 3.2,
+        "tolerance": "±0.2"
+      },
+      "adaptation_limits": {
+        "pressure_correction_min": -0.5,
+        "pressure_correction_max": 0.5
+      }
+    }
+  },
+
+  "ignition_system_adaptation": {
+    "base_timing_map": {
+      "2123": {
+        "rpm_load_map": [
+          {"rpm": 800, "load": 10, "advance": 8},
+          {"rpm": 1500, "load": 10, "advance": 12},
+          {"rpm": 2000, "load": 10, "advance": 18},
+          {"rpm": 2500, "load": 10, "advance": 22},
+          {"rpm": 3000, "load": 10, "advance": 26},
+          {"rpm": 4000, "load": 10, "advance": 32},
+          {"rpm": 5000, "load": 10, "advance": 36},
+          {"rpm": 6000, "load": 10, "advance": 38}
+        ],
+        "corrections": {
+          "coolant_temp": [
+            {"temp": -30, "correction": -5},
+            {"temp": -10, "correction": -3},
+            {"temp": 0, "correction": -2},
+            {"temp": 20, "correction": 0},
+            {"temp": 40, "correction": 0},
+            {"temp": 60, "correction": 0},
+            {"temp": 80, "correction": -1},
+            {"temp": 100, "correction": -3},
+            {"temp": 120, "correction": -5}
+          ],
+          "intake_temp": [
+            {"temp": -30, "correction": 2},
+            {"temp": -10, "correction": 1},
+            {"temp": 0, "correction": 0},
+            {"temp": 20, "correction": 0},
+            {"temp": 40, "correction": -1},
+            {"temp": 60, "correction": -2},
+            {"temp": 80, "correction": -3}
+          ]
+        }
+      }
+    },
+    
+    "knock_sensor_adaptation": {
+      "learning_procedure": {
+        "name": "Обучение датчика детонации",
+        "description": "Калибровка чувствительности датчика детонации",
+        "steps": [
+          {
+            "step": 1,
+            "action": "Прогреть двигатель до 80-90°C",
+            "duration": "5-10 минут"
+          },
+          {
+            "step": 2,
+            "action": "Двигатель на холостом ходу, включить процедуру обучения",
+            "command": "AT KNR",
+            "timeout": 60
+          },
+          {
+            "step": 3,
+            "action": "Повысить обороты до 3000-3500 об/мин",
+            "duration": "30 секунд"
+          },
+          {
+            "step": 4,
+            "action": "Вернуться на холостой ход",
+            "duration": "30 секунд"
+          }
+        ],
+        "thresholds": {
+          "background_noise_max": 45,
+          "knock_threshold": 65,
+          "retard_per_knock": 3.0,
+          "recovery_rate": 0.5
+        }
+      }
+    }
+  },
+
+  "idle_speed_control": {
+    "target_speeds": {
+      "base_idle": {
+        "2123": 800,
+        "21236": 750,
+        "2123-250": 750,
+        "2123M": 700,
+        "tolerance": "±50"
+      },
+      "with_ac": {
+        "2123": 900,
+        "21236": 850,
+        "2123-250": 850,
+        "2123M": 800,
+        "compensation": "100-150"
+      },
+      "with_ps": {
+        "compensation": "50-100",
+        "delay": "0.5-1.0"
+      }
+    },
+    
+    "stepper_motor_calibration": {
+      "positions": {
+        "fully_closed": 0,
+        "cold_start": 120,
+        "warm_idle": 45,
+        "ac_engaged": 80,
+        "electrical_load": 60,
+        "fully_open": 255
+      },
+      "learning_procedure": {
+        "command": "AT IAC",
+        "description": "Обучение шагового двигателя РХХ",
+        "timeout": 30
+      }
+    }
+  },
+
+  "immobilizer_adaptation": {
+    "key_learning": {
+      "procedures": {
+        "erase_all_keys": {
+          "name": "Удаление всех ключей",
+          "security_code": "required",
+          "command": "AT IMMO ERASE",
+          "max_keys": 5
+        },
+        "add_new_key": {
+          "name": "Добавление нового ключа",
+          "steps": [
+            "Вставить мастер-ключ, включить зажигание",
+            "Выключить зажигание, вытащить ключ",
+            "Вставить новый ключ в течение 10 секунд",
+            "Включить зажигание, подождать 3 секунды",
+            "Проверить работу иммобилайзера"
+          ],
+          "timeout": 30
+        }
+      }
+    },
+    
+    "ecu_pairing": {
+      "procedure": {
+        "name": "Привязка нового ЭБУ",
+        "requirements": [
+          "Оригинальный мастер-ключ",
+          "Код безопасности",
+          "Специальное оборудование (диагностический сканер)"
+        ],
+        "steps": [
+          "Подключить диагностическое оборудование",
+          "Считать код безопасности из иммобилайзера",
+          "Записать код в новый ЭБУ",
+          "Выполнить процедуру синхронизации"
+        ]
+      }
+    }
+  },
+
+  "abs_system_adaptation": {
+    "wheel_speed_sensors": {
+      "learning_procedure": {
+        "name": "Обучение датчиков скорости",
+        "description": "Калибровка датчиков ABS после замены",
+        "steps": [
+          "Поднять все колеса над землей",
+          "Включить зажигание",
+          "Запустить процедуру обучения",
+          "Вращать каждое колесо со скоростью 20-40 км/ч",
+          "Сохранить калибровочные значения"
+        ]
+      },
+      "tolerances": {
+        "signal_gap": "0.8-1.2mm",
+        "air_gap": "0.3-1.1mm",
+        "resistance": "800-1600Ω"
+      }
+    },
+    
+    "hydraulic_unit": {
+      "bleeding_procedure": {
+        "name": "Прокачка модуля ABS",
+        "requires": "Диагностический сканер",
+        "steps": [
+          "Активировать процедуру прокачки через сканер",
+          "Открыть передний правый суппорт",
+          "Нажать педаль тормоза по команде",
+          "Повторить для всех колес",
+          "Проверить уровень тормозной жидкости"
+        ]
+      }
+    }
+  },
+
+  "transmission_adaptation": {
+    "clutch_learning": {
+      "procedure": {
+        "name": "Обучение точки схватывания сцепления",
+        "applicable": "Только для моделей с электронным управлением сцеплением",
+        "steps": [
+          "Запустить двигатель, выжать сцепление",
+          "Активировать процедуру обучения",
+          "Медленно отпускать сцепление до схватывания",
+          "Зафиксировать положение",
+          "Повторить 3 раза для усреднения"
+        ]
+      }
+    }
+  },
+
+  "airbag_system_adaptation": {
+    "crash_data_reset": {
+      "procedure": {
+        "name": "Сброс данных аварии",
+        "warning": "Выполнять только после устранения причин срабатывания",
+        "command": "AT SRS RESET",
+        "requirements": [
+          "Все компоненты SRS исправны",
+          "Аккумулятор полностью заряжен",
+          "Ключ зажигания в положении ON"
+        ]
+      }
+    },
+    
+    "seat_occupancy_sensor": {
+      "calibration": {
+        "name": "Калибровка датчика занятости сиденья",
+        "steps": [
+          "Убедиться, что сиденье пустое",
+          "Выполнить калибровку пустого сиденья",
+          "Посадить человека весом 70-80 кг",
+          "Выполнить калибровку занятого сиденья",
+          "Проверить индикатор подушки безопасности"
+        ]
+      }
+    }
+  },
+
+  "instrument_cluster_adaptation": {
+    "mileage_correction": {
+      "limits": {
+        "increase_max_per_day": 100,
+        "decrease_allowed": false,
+        "security_level": "HIGH"
+      }
+    },
+    
+    "service_indicator": {
+      "reset_procedure": {
+        "name": "Сброс сервисного интервала",
+        "methods": [
+          {
+            "method": "Через диагностический разъем",
+            "command": "AT SI RESET",
+            "description": "Сброс через OBD-II"
+          },
+          {
+            "method": "Комбинация кнопок",
+            "steps": [
+              "Выключить зажигание",
+              "Нажать и удерживать кнопку сброса суточного пробега",
+              "Включить зажигание",
+              "Дождаться появления сервисного меню",
+              "Выбрать сброс интервала"
+            ]
+          }
+        ],
+        "intervals": {
+          "distance": 15000,
+          "time": 365,
+          "units": "км/дни"
+        }
+      }
+    }
+  },
+
+  "ac_system_adaptation": {
+    "pressure_sensor_calibration": {
+      "procedure": {
+        "name": "Калибровка датчика давления хладагента",
+        "steps": [
+          "Эвакуировать хладагент из системы",
+          "Подключить манометрическую станцию",
+          "Создать вакуум 700-750 mmHg",
+          "Выполнить калибровку нулевого давления",
+          "Заправить систему хладагентом",
+          "Выполнить калибровку рабочего давления"
+        ],
+        "specifications": {
+          "low_pressure": "1.5-2.5 bar",
+          "high_pressure": "12-18 bar",
+          "ambient_temp": "15-35°C"
+        }
+      }
+    },
+    
+    "blower_motor_calibration": {
+      "procedure": {
+        "name": "Обучение двигателя вентилятора",
+        "steps": [
+          "Включить зажигание",
+          "Активировать процедуру обучения",
+          "Автоматический прогон всех скоростей",
+          "Сохранение крайних положений",
+          "Проверка плавности регулировки"
+        ]
+      }
+    }
+  },
+
+  "adaptation_limits_and_safety": {
+    "general_limits": {
+      "max_parameter_change_per_session": 15,
+      "coolant_temp_range": "15-90",
+      "battery_voltage_min": 12.4,
+      "battery_voltage_max": 15.0,
+      "ignition_cycles_required": 3
+    },
+    
+    "recovery_procedures": {
+      "failed_adaptation": {
+        "steps": [
+          "Выключить зажигание на 30 секунд",
+          "Отсоединить минусовую клемму АКБ на 5 минут",
+          "Подключить АКБ, включить зажигание",
+          "Выполнить базовую калибровку",
+          "Проверить наличие ошибок"
+        ]
+      },
+      "emergency_reset": {
+        "command": "AT FACTORY",
+        "description": "Возврат к заводским настройкам",
+        "warning": "УДАЛЯЕТ ВСЕ АДАПТАЦИИ"
+      }
+    },
+    
+    "backup_restore": {
+      "auto_backup": true,
+      "max_backups": 10,
+      "backup_location": "./backups/",
+      "restore_procedure": {
+        "steps": [
+          "Выбрать резервную копию",
+          "Проверить совместимость версий",
+          "Подтвердить восстановление",
+          "Выполнить перезагрузку ЭБУ"
+        ]
+      }
+    }
+  },
+
+  "model_specific_settings": {
+    "2123": {
+      "requires_throttle_adaptation_after_battery": true,
+      "idle_learn_after_throttle_clean": true,
+      "immobilizer_type": "Philips",
+      "abs_system": "Bosch 5.3",
+      "special_notes": "Может потребоваться сброс адаптаций после чистки дросселя"
+    },
+    "21236": {
+      "requires_throttle_adaptation_after_battery": true,
+      "idle_learn_after_throttle_clean": true,
+      "immobilizer_type": "Delphi",
+      "abs_system": "Bosch 8.1",
+      "special_notes": "Чувствителен к качеству топлива, требует частой адаптации ДК"
+    },
+    "2123-250": {
+      "requires_throttle_adaptation_after_battery": false,
+      "idle_learn_after_throttle_clean": true,
+      "immobilizer_type": "Continental",
+      "abs_system": "Bosch 9.0",
+      "special_notes": "Имеет систему управления фазой газораспределения"
+    },
+    "2123M": {
+      "requires_throttle_adaptation_after_battery": false,
+      "idle_learn_after_throttle_clean": false,
+      "immobilizer_type": "Continental",
+      "abs_system": "Bosch 9.3",
+      "special_notes": "Полностью электронная педаль газа, самодиагностика"
+    }
+  },
+
+  "diagnostic_checks_before_adaptation": {
+    "mandatory_checks": [
+      {
+        "check": "Наличие ошибок в памяти",
+        "action": "Считать и устранить все DTC",
+        "fail_action": "Блокировка адаптации"
+      },
+      {
+        "check": "Напряжение АКБ",
+        "min": 12.4,
+        "max": 15.0,
+        "fail_action": "Зарядить АКБ"
+      },
+      {
+        "check": "Температура охлаждающей жидкости",
+        "min": 15,
+        "max": 90,
+        "fail_action": "Прогреть/остудить двигатель"
+      },
+      {
+        "check": "Давление топлива",
+        "min": 2.6,
+        "max": 3.4,
+        "fail_action": "Проверить топливную систему"
+      },
+      {
+        "check": "Обороты холостого хода",
+        "min": 600,
+        "max": 1000,
+        "fail_action": "Настроить РХХ"
+      }
+    ],
+    "recommended_checks": [
+      "Состояние воздушного фильтра",
+      "Качество топлива",
+      "Исправность свечей зажигания",
+      "Герметичность впускного тракта",
+      "Работоспособность ДМРВ"
+    ]
+  },
+
+  "adaptation_monitoring": {
+    "parameters_to_monitor": [
+      {
+        "parameter": "RPM",
+        "sampling_rate": 100,
+        "units": "ms",
+        "tolerance": "±50"
+      },
+      {
+        "parameter": "THROTTLE_POSITION",
+        "sampling_rate": 100,
+        "units": "ms",
+        "tolerance": "±2%"
+      },
+      {
+        "parameter": "FUEL_TRIM_LONG",
+        "sampling_rate": 1000,
+        "units": "ms",
+        "tolerance": "±10%"
+      },
+      {
+        "parameter": "IGNITION_TIMING",
+        "sampling_rate": 100,
+        "units": "ms",
+        "tolerance": "±3°"
+      }
+    ],
+    "success_criteria": {
+      "rpm_stability": {
+        "duration": 30,
+        "max_variation": 20,
+        "units": "секунды/обороты"
+      },
+      "throttle_stability": {
+        "duration": 10,
+        "max_variation": 1,
+        "units": "секунды/%"
+      },
+      "fuel_trim_convergence": {
+        "target": "0 ±5%",
+        "timeout": 300,
+        "units": "секунды"
+      }
+    }
+  },
+
+  "version_control": {
+    "schema_version": "1.0",
+    "compatible_firmware_versions": [
+      "Bosch M1.5.4: v4.1+",
+      "Bosch M7.9.7: v8.3+",
+      "Itelma: v2.5+",
+      "Bosch ME17.9.7: v12.1+",
+      "Continental: v3.0+"
+    ],
+    "update_procedure": {
+      "check_for_updates": true,
+      "update_url": "https://updates.niva-diagnostic.ru/adaptation_maps",
+      "auto_update": false,
+      "backup_before_update": true
+    }
+  }
+}
